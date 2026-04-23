@@ -5,6 +5,7 @@ import categoriesRouter from './routes/categories.js';
 import dishesRouter from './routes/dishes.js';
 import ordersRouter from './routes/orders.js';
 import authRouter, { authMiddleware } from './routes/auth.js';
+import db from './db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,8 +27,10 @@ app.use('/api/auth', authRouter);
 
 // Защищённый маршрут для получения заказов (админка)
 app.get('/api/admin/orders', authMiddleware, (req, res) => {
-  import('./db.js').then(({ default: db }) => {
-    const orders = db.prepare('SELECT * FROM orders ORDER BY createdAt DESC').all();
+  db.all('SELECT * FROM orders ORDER BY createdAt DESC', [], (err, orders) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
     res.json(orders.map(order => ({
       ...order,
       items: JSON.parse(order.items)

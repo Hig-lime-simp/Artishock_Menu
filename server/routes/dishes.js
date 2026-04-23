@@ -24,68 +24,76 @@ const upload = multer({ storage });
 
 // GET /api/dishes - получить блюда категории
 router.get('/', (req, res) => {
-  try {
-    const { categoryId } = req.query;
-    let dishes;
-    if (categoryId) {
-      dishes = db.prepare('SELECT * FROM dishes WHERE categoryId = ?').all(categoryId);
-    } else {
-      dishes = db.prepare('SELECT * FROM dishes').all();
+  const { categoryId } = req.query;
+  let query;
+  let params;
+  if (categoryId) {
+    query = 'SELECT * FROM dishes WHERE categoryId = ?';
+    params = [categoryId];
+  } else {
+    query = 'SELECT * FROM dishes';
+    params = [];
+  }
+  db.all(query, params, (err, dishes) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
     }
     res.json(dishes);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  });
 });
 
 // GET /api/dishes/:id - получение одного блюда
 router.get('/:id', (req, res) => {
-  try {
-    const { id } = req.params;
-    const dish = db.prepare('SELECT * FROM dishes WHERE id = ?').get(id);
+  const { id } = req.params;
+  db.get('SELECT * FROM dishes WHERE id = ?', [id], (err, dish) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
     if (!dish) {
       return res.status(404).json({ error: 'Dish not found' });
     }
     res.json(dish);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  });
 });
 
 // POST /api/dishes - создать блюдо
 router.post('/', upload.single('image'), (req, res) => {
-  try {
-    const { name, price, description, categoryId } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : null;
-    
-    if (!name || !price || !categoryId) {
-      return res.status(400).json({ error: 'Name, price and categoryId are required' });
-    }
-    
-    const result = db.prepare(
-      'INSERT INTO dishes (name, price, description, image, categoryId) VALUES (?, ?, ?, ?, ?)'
-    ).run(name, parseFloat(price), description || '', image, parseInt(categoryId));
-    
-    res.json({ 
-      id: result.lastInsertRowid, 
-      name, 
-      price: parseFloat(price), 
-      description: description || '', 
-      image, 
-      categoryId: parseInt(categoryId) 
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  const { name, price, description, categoryId } = req.body;
+  const image = req.file ? `/uploads/${req.file.filename}` : null;
+  
+  if (!name || !price || !categoryId) {
+    return res.status(400).json({ error: 'Name, price and categoryId are required' });
   }
+  
+  db.run(
+    'INSERT INTO dishes (name, price, description, image, categoryId) VALUES (?, ?, ?, ?, ?)',
+    [name, parseFloat(price), description || '', image, parseInt(categoryId)],
+    function(err) {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+      res.json({ 
+        id: this.lastID, 
+        name, 
+        price: parseFloat(price), 
+        description: description || '', 
+        image, 
+        categoryId: parseInt(categoryId) 
+      });
+    }
+  );
 });
 
 // PUT /api/dishes/:id - обновить блюдо
 router.put('/:id', upload.single('image'), (req, res) => {
-  try {
-    const { id } = req.params;
-    const { name, price, description, categoryId } = req.body;
-    
-    const existingDish = db.prepare('SELECT * FROM dishes WHERE id = ?').get(id);
+  const { id } = req.params;
+  const { name, price, description, categoryId } = req.body;
+  
+  // Сначала получаем существующее блюдо
+  db.get('SELECT * FROM dishes WHERE id = ?', [id], (err, existingDish) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
     if (!existingDish) {
       return res.status(404).json({ error: 'Dish not found' });
     }
@@ -101,35 +109,38 @@ router.put('/:id', upload.single('image'), (req, res) => {
     const updatedDescription = description !== undefined ? description : existingDish.description;
     const updatedCategoryId = categoryId ? parseInt(categoryId) : existingDish.categoryId;
     
-    const result = db.prepare(
-      'UPDATE dishes SET name = ?, price = ?, description = ?, image = ?, categoryId = ? WHERE id = ?'
-    ).run(updatedName, updatedPrice, updatedDescription, image, updatedCategoryId, id);
-    
-    res.json({ 
-      id: parseInt(id), 
-      name: updatedName, 
-      price: updatedPrice, 
-      description: updatedDescription, 
-      image, 
-      categoryId: updatedCategoryId 
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+    db.run(
+      'UPDATE dishes SET name = ?, price = ?, description = ?, image = ?, categoryId = ? WHERE id = ?',
+      [updatedName, updatedPrice, updatedDescription, image, updatedCategoryId, id],
+      function(err) {
+        if (err) {
+          return res.status(500).json({ error: err.message });
+        }
+        res.json({ 
+          id: parseInt(id), 
+          name: updatedName, 
+          price: updatedPrice, 
+          description: updatedDescription, 
+          image, 
+          categoryId: updatedCategoryId 
+        });
+      }
+    );
+  });
 });
 
 // DELETE /api/dishes/:id - удалить блюдо
 router.delete('/:id', (req, res) => {
-  try {
-    const { id } = req.params;
-    const result = db.prepare('DELETE FROM dishes WHERE id = ?').run(id);
-    if (result.changes === 0) {
+  const { id } = req.params;
+  db.run('DELETE FROM dishes WHERE id = ?', [id], function(err) {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (this.changes === 0) {
       return res.status(404).json({ error: 'Dish not found' });
     }
     res.json({ message: 'Dish deleted' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  });
 });
 
 export default router;
