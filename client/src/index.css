@@ -263,6 +263,24 @@ body {
   border-top: 2px solid #eee;
 }
 
+.view-order-btn {
+  width: 100%;
+  background: #4bb060;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 12px;
+}
+
+.view-order-btn:hover {
+  background: #3d9a50;
+}
+
 .cart-total-row {
   display: flex;
   justify-content: space-between;
@@ -538,4 +556,20 @@ body {
   margin-top: 12px;
   font-size: 24px;
   color: #4bb060;
+}
+
+/* Loading styles */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #F1EEE6;
+}
+
+.loading-text {
+  font-family: 'Rubik Mono One';
+  font-size: 32px;
+  color: #4bb060;
+  text-align: center;
 }

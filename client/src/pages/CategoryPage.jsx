@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import logo from '../assets/logo.jpg';
 
 function CategoryPage({ addToCart }) {
   const { id } = useParams();
@@ -36,15 +37,24 @@ function CategoryPage({ addToCart }) {
   };
 
   if (loading) {
-    return <div className="dishes-grid"><p>Загрузка...</p></div>;
+    return (
+      <div className="loading-container">
+        <p className="loading-text">Загрузка...</p>
+      </div>
+    );
   }
 
   return (
     <div>
-      <div className="category-page-header">
-        <Link to="/" className="back-link">← Назад</Link>
-        <h1 className="category-page-title">{categoryName}</h1>
-      </div>
+      <header className="cafe-header">
+        <div className="header-content">
+          <h1>
+            <span className="menu-text">Меню</span>
+            <span className="cafe-text">{categoryName}</span>
+          </h1>
+          <img src={logo} alt="Логотип кафе" className="header-logo" />
+        </div>
+      </header>
       
       <div className="dishes-grid">
         {dishes.length === 0 ? (
