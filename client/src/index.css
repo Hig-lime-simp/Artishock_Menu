@@ -471,12 +471,19 @@ body {
   flex-shrink: 0;
 }
 
-.cafe-header h1 {
-  color: white;
-  font-size: 20px;
-  font-weight: 700;
-  margin: 0;
-  flex: 1;
+.header-container-label{
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.header-container-label h1{
+  margin-left: 15px;
 }
 
 /* Добавляем отступ для категорий под шапкой */
