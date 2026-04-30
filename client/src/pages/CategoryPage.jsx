@@ -41,7 +41,7 @@ function CategoryPage({ addToCart }) {
             className="back-button"
             onClick={() => navigate('/')}
           >
-            ← Назад
+             Назад
           </button>
         </div>
       </header>

@@ -486,7 +486,6 @@ body {
 .header-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
   gap: 12px;
@@ -506,7 +505,6 @@ body {
   margin: 0;
   flex: 1;
   line-height: 1;
-  text-align: center;
 }
 
 .back-button {
@@ -535,12 +533,14 @@ body {
   display: block;
 }
 
+
 .cafe-text{
-  margin-left: 20px;
+  margin-left: 70px;
 }
 
 .menu-text {
   font-size: 40px;
+  margin-left: 20px;
 }
 
 /* Добавляем отступ для категорий под шапкой */
