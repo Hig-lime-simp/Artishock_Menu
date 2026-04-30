@@ -20,16 +20,6 @@ function CategoryPage({ addToCart }) {
         console.error('Error loading dishes:', err);
         setLoading(false);
       });
-
-    // Загружаем название категории
-    fetch('/api/categories')
-      .then(res => res.json())
-      .then(categories => {
-        const category = categories.find(c => c.id === parseInt(id));
-        if (category) {
-          setCategoryName(category.name);
-        }
-      });
   }, [id]);
 
   const handleAddToCart = (dish) => {
@@ -54,8 +44,6 @@ function CategoryPage({ addToCart }) {
           >
             ← Назад
           </button>
-          <h1>{categoryName}</h1>
-          <img src={logo} alt="Логотип кафе" className="header-logo" />
         </div>
       </header>
       
