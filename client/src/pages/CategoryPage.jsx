@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import logo from '../assets/logo.jpg';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function CategoryPage({ addToCart }) {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [dishes, setDishes] = useState([]);
-  const [categoryName, setCategoryName] = useState('');
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     // Загружаем блюда категории
     fetch(`/api/dishes?categoryId=${id}`)
@@ -40,7 +39,7 @@ function CategoryPage({ addToCart }) {
         <div className="header-content">
           <button 
             className="back-button"
-            onClick={() => window.history.back()}
+            onClick={() => navigate('/')}
           >
             ← Назад
           </button>
@@ -55,7 +54,6 @@ function CategoryPage({ addToCart }) {
             <div key={dish.id} className="dish-card">
               {dish.image ? (
                 <img 
-                  // Updated to match server port (3008)
                   src={dish.image} 
                   alt={dish.name}
                   className="dish-image"
