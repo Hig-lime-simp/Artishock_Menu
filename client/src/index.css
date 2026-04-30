@@ -4,13 +4,12 @@
   box-sizing: border-box;
 }
 
-/* Подключение шрифта MAGNAT HEAD */
 @font-face {
-  font-family: 'MAGNAT HEAD';
-  src: url('./fonts/FONTSPRINGDEMO-MagnatHeadBold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'Bungee';
+    src: url(client\src\fonts\Bungee-Regular.woff2) format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 body {
@@ -485,8 +484,8 @@ body {
   font-size: 50px;
   margin: 0;
   flex: 1;
-  font-family: 'MAGNAT HEAD', -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
-  line-height: 1.1;
+  font-family: "Bungee", sans-serif;
+  line-height: 1;
 }
 
 .cafe-header h1 .menu-text,
