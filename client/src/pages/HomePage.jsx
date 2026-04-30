@@ -28,8 +28,8 @@ function HomePage() {
       {/* Шапка с логотипом и заголовком */}
       <header className="cafe-header">
         <div className="header-content">
-          <img src={logo} alt="Логотип кафе" className="header-logo" />
           <h1>Меню кафе</h1>
+          <img src={logo} alt="Логотип кафе" className="header-logo" />
         </div>
       </header>
       
