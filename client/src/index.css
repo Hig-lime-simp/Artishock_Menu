@@ -5,8 +5,8 @@
 }
 
 @font-face {
-    font-family: 'Bungee';
-    src: url('./fonts/Bungee-Regular.woff2') format('woff2');
+    font-family: 'Rubik Mono One';
+    src: url(./fonts/RubikMonoOne-Regular.woff2) format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -470,6 +470,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   gap: 12px;
+  font-family: "Rubik Mono One";
 }
 
 .header-logo {
@@ -484,7 +485,6 @@ body {
   font-size: 50px;
   margin: 0;
   flex: 1;
-  font-family: "Bungee", sans-serif;
   line-height: 1;
 }
 
