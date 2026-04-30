@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../assets/logo.jpg';
 
 function HomePage() {
   const [categories, setCategories] = useState([]);
@@ -24,22 +25,31 @@ function HomePage() {
 
   return (
     <div className="categories-list">
-      <h1 style={{ padding: '16px', fontSize: '24px' }}>Меню Кафе</h1>
-      {categories.map(category => (
-        <Link 
-          key={category.id} 
-          to={`/category/${category.id}`}
-          style={{ textDecoration: 'none', color: 'inherit' }}
-        >
-          <div className="category-item">
-            <h2>{category.name}</h2>
-          </div>
-        </Link>
-      ))}
-      <div style={{ padding: '16px', marginTop: '20px' }}>
-        <Link to="/admin/login" style={{ color: '#3498db', textDecoration: 'none', fontSize: '14px' }}>
-          Админ-панель
-        </Link>
+      {/* Шапка с логотипом и заголовком */}
+      <header className="cafe-header">
+        <div className="header-content">
+          <img src={logo} alt="Логотип кафе" className="header-logo" />
+          <h1>Меню кафе</h1>
+        </div>
+      </header>
+      
+      <div className="categories-content">
+        {categories.map(category => (
+          <Link 
+            key={category.id} 
+            to={`/category/${category.id}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <div className="category-item">
+              <h2>{category.name}</h2>
+            </div>
+          </Link>
+        ))}
+        <div style={{ marginTop: '20px' }}>
+          <Link to="/admin/login" style={{ color: '#4bb060', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>
+            Админ-панель
+          </Link>
+        </div>
       </div>
     </div>
   );

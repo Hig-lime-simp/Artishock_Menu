@@ -41,9 +41,9 @@ function CategoryPage({ addToCart }) {
 
   return (
     <div>
-      <div style={{ padding: '16px' }}>
-        <Link to="/" style={{ color: '#3498db', textDecoration: 'none' }}>← Назад</Link>
-        <h1 style={{ marginTop: '12px', fontSize: '24px' }}>{categoryName}</h1>
+      <div className="category-page-header">
+        <Link to="/" className="back-link">← Назад</Link>
+        <h1 className="category-page-title">{categoryName}</h1>
       </div>
       
       <div className="dishes-grid">
