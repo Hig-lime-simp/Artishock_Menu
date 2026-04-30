@@ -6,14 +6,16 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/api': {
-        target: 'http://localhost:3001',
-        changeOrigin: true
-      },
-      '/uploads': {
-        target: 'http://localhost:3001',
-        changeOrigin: true
-      }
+    '/api': {
+      // Proxy API requests to the backend server running on port 3001
+      target: 'http://localhost:3001',
+      changeOrigin: true
+    },
+        '/uploads': {
+          // Proxy image upload requests to the backend server (port 3001)
+          target: 'http://localhost:3001',
+          changeOrigin: true
+        }
     }
   }
 })

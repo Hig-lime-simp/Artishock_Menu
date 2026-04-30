@@ -54,6 +54,15 @@ function AdminLogin() {
         {error && <p style={{ color: '#e74c3c', marginBottom: '16px' }}>{error}</p>}
         <button type="submit" className="submit-btn">Войти</button>
       </form>
+      {/* Кнопка выхода из формы входа */}
+      <button
+        type="button"
+        className="exit-btn"
+        style={{ marginTop: '16px' }}
+        onClick={() => navigate('/')}
+      >
+        Выйти
+      </button>
     </div>
   );
 }

@@ -54,7 +54,8 @@ function CategoryPage({ addToCart }) {
             <div key={dish.id} className="dish-card">
               {dish.image ? (
                 <img 
-                  src={`http://localhost:3001${dish.image}`} 
+                  // Updated to match server port (3008)
+                  src={dish.image} 
                   alt={dish.name}
                   className="dish-image"
                   onError={(e) => { e.target.style.display = 'none'; }}
