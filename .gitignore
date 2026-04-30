@@ -1,1 +1,4 @@
-Nothing should be ignored since the changes only include source code files (.jsx, .css) and no build artifacts, dependencies, or temporary files.
+```
+# Build artifacts
+client/dist/
+```
