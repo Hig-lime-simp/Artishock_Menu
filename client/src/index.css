@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+/* Подключение шрифта MAGNAT HEAD */
+@font-face {
+  font-family: 'MAGNAT HEAD';
+  src: url('https://cdn.jsdelivr.net/gh/fonts/MAGNAT-HEAD.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
   background-color: #F1EEE6;
@@ -471,19 +479,24 @@ body {
   flex-shrink: 0;
 }
 
-.header-container-label{
-    color: white;
-    font-size: 24px;
-    font-weight: 700;
-    margin: 0;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
+.cafe-header h1 {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  flex: 1;
+  font-family: 'MAGNAT HEAD', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.1;
 }
 
-.header-container-label h1{
-  margin-left: 15px;
+.cafe-header h1 .menu-text,
+.cafe-header h1 .cafe-text {
+  display: block;
+}
+
+.cafe-header h1 .menu-text {
+  margin-bottom: 2px;
+
 }
 
 /* Добавляем отступ для категорий под шапкой */
