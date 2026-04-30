@@ -48,10 +48,13 @@ function CategoryPage({ addToCart }) {
     <div>
       <header className="cafe-header">
         <div className="header-content">
-          <h1>
-            <span className="menu-text">Меню</span>
-            <span className="cafe-text">{categoryName}</span>
-          </h1>
+          <button 
+            className="back-button"
+            onClick={() => window.history.back()}
+          >
+            ← Назад
+          </button>
+          <h1>{categoryName}</h1>
           <img src={logo} alt="Логотип кафе" className="header-logo" />
         </div>
       </header>

@@ -90,8 +90,8 @@ function CartButton({ cart, total, count, updateQuantity, removeFromCart, clearC
                     <span>Итого:</span>
                     <span>{total} ₽</span>
                   </div>
-                  <button className="view-order-btn" onClick={handleCheckout}>
-                    Просмотр заказа
+                  <button className="checkout-btn" onClick={handleCheckout}>
+                    Оформить заказ
                   </button>
                 </div>
               </>
