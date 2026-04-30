@@ -17,30 +17,30 @@ const db = new sqlite3.Database(dbPath, (err) => {
 });
 
 // Создание таблиц
+// Initialise required tables. sqlite3's `run` does not support multiple statements in a single call,
+// so we execute each CREATE statement separately to ensure tables are created on server start.
 db.serialize(() => {
-  db.run(`
-    CREATE TABLE IF NOT EXISTS categories (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL
-    );
+  db.run(`CREATE TABLE IF NOT EXISTS categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
+  );`);
 
-    CREATE TABLE IF NOT EXISTS dishes (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      price REAL NOT NULL,
-      description TEXT,
-      image TEXT,
-      categoryId INTEGER NOT NULL,
-      FOREIGN KEY (categoryId) REFERENCES categories(id) ON DELETE CASCADE
-    );
+  db.run(`CREATE TABLE IF NOT EXISTS dishes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    price REAL NOT NULL,
+    description TEXT,
+    image TEXT,
+    categoryId INTEGER NOT NULL,
+    FOREIGN KEY (categoryId) REFERENCES categories(id) ON DELETE CASCADE
+  );`);
 
-    CREATE TABLE IF NOT EXISTS orders (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      items TEXT NOT NULL,
-      totalAmount REAL NOT NULL,
-      createdAt TEXT DEFAULT CURRENT_TIMESTAMP
-    );
-  `);
+  db.run(`CREATE TABLE IF NOT EXISTS orders (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    items TEXT NOT NULL,
+    totalAmount REAL NOT NULL,
+    createdAt TEXT DEFAULT CURRENT_TIMESTAMP
+  );`);
 
   // Проверка наличия категорий, если нет - создадим тестовые
   db.get('SELECT COUNT(*) as count FROM categories', (err, row) => {

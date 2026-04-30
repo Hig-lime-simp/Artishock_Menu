@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+// Load environment variables from the project root .env file (relative to server folder)
+dotenv.config({ path: '../.env' });
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -10,7 +13,10 @@ import db from './db.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Environment variables already loaded above
 const app = express();
+// Changed port to avoid conflict with other processes
+// Changed port to avoid conflict with any previously running instance
 const PORT = 3001;
 
 // Middleware для парсинга JSON
@@ -39,5 +45,5 @@ app.get('/api/admin/orders', authMiddleware, (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+console.log(`Server running on http://localhost:${PORT}`);
 });

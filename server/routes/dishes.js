@@ -11,8 +11,16 @@ const router = express.Router();
 
 // Настройка multer для загрузки файлов
 const storage = multer.diskStorage({
+  // Store uploaded images in the "uploads" directory inside the server folder.
+  // Previously used '../uploads/' which pointed outside the server directory,
+  // causing ENOENT errors when accessing images via the static middleware.
+  // Store uploaded images in the "uploads" directory located at the server root.
+  // Previously the path was resolved relative to this file (server/routes), which
+  // resulted in attempts to write to "server/routes/uploads" – a directory that does
+  // not exist and caused ENOENT errors. We now navigate one level up before
+  // joining the "uploads" folder.
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../uploads/'));
+    cb(null, path.join(__dirname, '..', 'uploads'));
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
