@@ -125,7 +125,8 @@ body {
 .cart-button {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   background: #4bb060;
   color: rgb(255, 255, 255);
   padding: 16px 24px;
@@ -140,7 +141,7 @@ body {
 }
 
 .cart-button:active {
-  transform: scale(0.95);
+  transform: translateX(-50%) scale(0.95);
 }
 
 .cart-count {

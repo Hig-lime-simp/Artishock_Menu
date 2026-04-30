@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import logo from '../assets/logo.jpg';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function CategoryPage({ addToCart }) {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [dishes, setDishes] = useState([]);
-  const [categoryName, setCategoryName] = useState('');
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     // Загружаем блюда категории
     fetch(`/api/dishes?categoryId=${id}`)
@@ -19,16 +18,6 @@ function CategoryPage({ addToCart }) {
       .catch(err => {
         console.error('Error loading dishes:', err);
         setLoading(false);
-      });
-
-    // Загружаем название категории
-    fetch('/api/categories')
-      .then(res => res.json())
-      .then(categories => {
-        const category = categories.find(c => c.id === parseInt(id));
-        if (category) {
-          setCategoryName(category.name);
-        }
       });
   }, [id]);
 
@@ -50,12 +39,10 @@ function CategoryPage({ addToCart }) {
         <div className="header-content">
           <button 
             className="back-button"
-            onClick={() => window.history.back()}
+            onClick={() => navigate('/')}
           >
             ← Назад
           </button>
-          <h1>{categoryName}</h1>
-          <img src={logo} alt="Логотип кафе" className="header-logo" />
         </div>
       </header>
       
@@ -67,7 +54,6 @@ function CategoryPage({ addToCart }) {
             <div key={dish.id} className="dish-card">
               {dish.image ? (
                 <img 
-                  // Updated to match server port (3008)
                   src={dish.image} 
                   alt={dish.name}
                   className="dish-image"
