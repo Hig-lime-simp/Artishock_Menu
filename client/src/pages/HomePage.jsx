@@ -36,7 +36,9 @@ function HomePage() {
             <span className="menu-text">Меню</span>
             <span className="cafe-text">Кафе</span>
           </h1>
-          <img src={logo} alt="Логотип кафе" className="header-logo" />
+          <Link to="/admin/login" style={{ textDecoration: 'none' }}>
+            <img src={logo} alt="Логотип кафе" className="header-logo" />
+          </Link>
         </div>
       </header>
       
@@ -52,11 +54,6 @@ function HomePage() {
             </div>
           </Link>
         ))}
-        <div style={{ marginTop: '20px' }}>
-          <Link to="/admin/login" style={{ color: '#4bb060', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>
-            Админ-панель
-          </Link>
-        </div>
       </div>
     </div>
   );

@@ -1,30 +1,13 @@
-```gitignore
-# Compiled and build artifacts
-*.pyc
-__pycache__/
-*.o
-*.obj
-dist/
-build/
-target/
-
+```
 # Dependencies
-.venv/
-venv/
 node_modules/
-.julia/
-.zig-cache/
-.mypy_cache/
-.pytest_cache/
-.coverage
-coverage/
-htmlcov/
+
+# Database
+database.sqlite
 
 # Logs and temp files
 *.log
 *.tmp
-*.swp
-*.swo
 
 # Environment
 .env
@@ -34,16 +17,16 @@ htmlcov/
 # Editors
 .vscode/
 .idea/
-*.swp
-*.swo
 
-# System files
-.DS_Store
-Thumbs.db
-```
-
-Wait, I need to reconsider this. The only change was modifying `client/src/pages/HomePage.jsx`, which is a source code file. There are no build artifacts, dependency directories, or temporary files in the change list that would require adding ignore rules.
-
-```gitignore
-
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+.env
+.env.local
+.env.*
 ```
