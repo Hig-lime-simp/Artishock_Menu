@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import artishokImage from '../assets/artishok-sample-1.png';
 
 function CategoryPage({ addToCart }) {
   const { id } = useParams();
@@ -44,6 +45,12 @@ function CategoryPage({ addToCart }) {
              Назад
           </button>
         </div>
+        <img 
+          src={artishokImage} 
+          alt="Artichokes"
+          className="category-header-image"
+          style={{ maxWidth: '300px', maxHeight: '200px', objectFit: 'contain' }}
+        />
       </header>
       
       <div className="dishes-grid">
