@@ -20,7 +20,11 @@ function HomePage() {
   }, []);
 
   if (loading) {
-    return <div className="categories-list"><p>Загрузка...</p></div>;
+    return (
+      <div className="loading-container">
+        <p className="loading-text">Загрузка...</p>
+      </div>
+    );
   }
 
   return (
