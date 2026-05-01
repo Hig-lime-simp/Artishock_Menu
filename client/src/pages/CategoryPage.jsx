@@ -45,12 +45,6 @@ function CategoryPage({ addToCart }) {
              Назад
           </button>
         </div>
-        <img 
-          src={artishokImage} 
-          alt="Artichokes"
-          className="category-header-image"
-          style={{ maxWidth: '300px', maxHeight: '200px', objectFit: 'contain' }}
-        />
       </header>
       
       <div className="dishes-grid">
