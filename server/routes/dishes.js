@@ -3,6 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import db from '../db.js';
+import { authMiddleware } from './auth.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -58,7 +59,7 @@ router.get('/:id', (req, res) => {
 });
 
 // POST /api/dishes - создать блюдо
-router.post('/', upload.single('image'), (req, res) => {
+router.post('/', authMiddleware, upload.single('image'), (req, res) => {
   const { name, price, description, categoryId } = req.body;
   const image = req.file ? `/uploads/${req.file.filename}` : null;
   
@@ -86,7 +87,7 @@ router.post('/', upload.single('image'), (req, res) => {
 });
 
 // PUT /api/dishes/:id - обновить блюдо
-router.put('/:id', upload.single('image'), (req, res) => {
+router.put('/:id', authMiddleware, upload.single('image'), (req, res) => {
   const { id } = req.params;
   const { name, price, description, categoryId } = req.body;
   
@@ -131,7 +132,7 @@ router.put('/:id', upload.single('image'), (req, res) => {
 });
 
 // PATCH /api/dishes/:id/hidden - переключить флаг isHidden
-router.patch('/:id/hidden', (req, res) => {
+router.patch('/:id/hidden', authMiddleware, (req, res) => {
   const { id } = req.params;
   const { isHidden } = req.body;
 
@@ -147,7 +148,7 @@ router.patch('/:id/hidden', (req, res) => {
 });
 
 // PATCH /api/dishes/:id/faster - переключить флаг isBeenFaster
-router.patch('/:id/faster', (req, res) => {
+router.patch('/:id/faster', authMiddleware, (req, res) => {
   const { id } = req.params;
   const { isBeenFaster } = req.body;
 
@@ -163,7 +164,7 @@ router.patch('/:id/faster', (req, res) => {
 });
 
 // DELETE /api/dishes/:id - удалить блюдо
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authMiddleware, (req, res) => {
   const { id } = req.params;
   db.run('DELETE FROM dishes WHERE id = ?', [id], function(err) {
     if (err) {

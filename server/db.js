@@ -47,12 +47,6 @@ db.serialize(() => {
     }
   });
 
-  db.run(`CREATE TABLE IF NOT EXISTS orders (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    items TEXT NOT NULL,
-    totalAmount REAL NOT NULL,
-    createdAt TEXT DEFAULT CURRENT_TIMESTAMP
-  );`);
 
   db.get('SELECT COUNT(*) as count FROM categories', (err, row) => {
     if (err) {

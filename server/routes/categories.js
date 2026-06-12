@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../db.js';
+import { authMiddleware } from './auth.js';
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 // POST /api/categories - создать категорию
-router.post('/', (req, res) => {
+router.post('/', authMiddleware, (req, res) => {
   const { name } = req.body;
   if (!name) {
     return res.status(400).json({ error: 'Name is required' });
@@ -28,7 +29,7 @@ router.post('/', (req, res) => {
 });
 
 // PUT /api/categories/:id - переименовать категорию
-router.put('/:id', (req, res) => {
+router.put('/:id', authMiddleware, (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
   if (!name) {
@@ -46,7 +47,7 @@ router.put('/:id', (req, res) => {
 });
 
 // DELETE /api/categories/:id - удалить категорию
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authMiddleware, (req, res) => {
   const { id } = req.params;
   db.run('DELETE FROM categories WHERE id = ?', [id], function(err) {
     if (err) {
