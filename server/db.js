@@ -50,10 +50,22 @@ db.serialize(() => {
     }
     if (row.count === 0) {
       const stmt = db.prepare('INSERT INTO categories (name) VALUES (?)');
-      stmt.run('Закуски', (err) => {});
-      stmt.run('Основные блюда', (err) => {});
-      stmt.run('Напитки', (err) => {});
-      stmt.run('Десерты', (err) => {});
+      stmt.run('Завтраки', (err) => {});
+      stmt.run('Блинчики и сырники', (err) => {});
+      stmt.run('Салаты', (err) => {});
+      stmt.run('Первые блюда', (err) => {});
+      stmt.run('Вторые блюда', (err) => {});
+      stmt.run('Пасты', (err) => {});
+      stmt.run('Европейский перекус', (err) => {});
+      stmt.run('Пиццы', (err) => {});
+      stmt.run('Стрит фуд', (err) => {});
+      stmt.run('Горячий кофе', (err) => {});
+      stmt.run('Холодный кофе', (err) => {});
+      stmt.run('Альтернатива', (err) => {});
+      stmt.run('Чайная карта', (err) => {});
+      stmt.run('Авторский чай', (err) => {});
+      stmt.run('Лимонады', (err) => {});
+      stmt.run('Смузи', (err) => {});
       stmt.finalize();
     }
   });
