@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import artishokImage from '../assets/artishok-sample-1.png';
 
-function CategoryPage({ addToCart }) {
+function CategoryPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
-    // Загружаем блюда категории
     fetch(`/api/dishes?categoryId=${id}`)
       .then(res => res.json())
       .then(data => {
@@ -21,10 +19,6 @@ function CategoryPage({ addToCart }) {
         setLoading(false);
       });
   }, [id]);
-
-  const handleAddToCart = (dish) => {
-    addToCart(dish);
-  };
 
   if (loading) {
     return (
@@ -38,7 +32,7 @@ function CategoryPage({ addToCart }) {
     <div>
       <header className="cafe-header">
         <div className="header-content">
-          <button 
+          <button
             className="back-button"
             onClick={() => navigate('/')}
           >
@@ -46,7 +40,7 @@ function CategoryPage({ addToCart }) {
           </button>
         </div>
       </header>
-      
+
       <div className="dishes-grid">
         {dishes.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#666' }}>В этой категории пока нет блюд</p>
@@ -54,8 +48,8 @@ function CategoryPage({ addToCart }) {
           dishes.map(dish => (
             <div key={dish.id} className="dish-card">
               {dish.image ? (
-                <img 
-                  src={dish.image} 
+                <img
+                  src={dish.image}
                   alt={dish.name}
                   className="dish-image"
                   onError={(e) => { e.target.style.display = 'none'; }}
@@ -72,12 +66,6 @@ function CategoryPage({ addToCart }) {
                 )}
                 <div className="dish-footer">
                   <span className="dish-price">{dish.price} ₽</span>
-                  <button 
-                    className="add-btn"
-                    onClick={() => handleAddToCart(dish)}
-                  >
-                    Добавить
-                  </button>
                 </div>
               </div>
             </div>

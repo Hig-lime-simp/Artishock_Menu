@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 // Environment variables are loaded in server/index.js
 // Default credentials fallback if .env missing
 // Use credentials from .env; fallback to defaults for safety
-console.log('ENV vars in auth:', process.env.ADMIN_LOGIN, process.env.ADMIN_PASSWORD);
 const ADMIN_LOGIN = process.env.ADMIN_LOGIN || '123';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '123';
 
@@ -12,7 +11,6 @@ const router = express.Router();
 // POST /api/auth/login - вход в админку
 router.post('/login', (req, res) => {
   const { login, password } = req.body;
-  console.log('Login attempt:', { login, password, ADMIN_LOGIN, ADMIN_PASSWORD });
   
   if (login === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
     const token = jwt.sign({ admin: true }, process.env.JWT_SECRET, { expiresIn: '24h' });
