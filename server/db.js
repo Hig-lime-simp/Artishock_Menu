@@ -35,6 +35,12 @@ db.serialize(() => {
     FOREIGN KEY (categoryId) REFERENCES categories(id) ON DELETE CASCADE
   );`);
 
+  db.run(`ALTER TABLE dishes ADD COLUMN isBeenFaster INTEGER NOT NULL DEFAULT 0`, (err) => {
+    if (err && !err.message.includes('duplicate column name')) {
+      console.error('Ошибка добавления колонки isBeenFaster:', err.message);
+    }
+  });
+
   db.run(`CREATE TABLE IF NOT EXISTS orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     items TEXT NOT NULL,

@@ -36,7 +36,7 @@ function HomePage() {
             <span className="menu-text">Меню</span>
             <span className="cafe-text">Кафе</span>
           </h1>
-          <Link to="/admin/login" style={{ textDecoration: 'none' }}>
+          <Link to="/admin/login">
             <img src={logo} alt="Логотип кафе" className="header-logo" />
           </Link>
         </div>
