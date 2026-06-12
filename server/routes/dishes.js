@@ -29,10 +29,10 @@ router.get('/', (req, res) => {
   let query;
   let params;
   if (categoryId) {
-    query = 'SELECT * FROM dishes WHERE categoryId = ?';
+    query = 'SELECT * FROM dishes WHERE categoryId = ? AND isHidden = 0 ORDER BY isBeenFaster DESC';
     params = [categoryId];
   } else {
-    query = 'SELECT * FROM dishes';
+    query = 'SELECT * FROM dishes ORDER BY isBeenFaster DESC';
     params = [];
   }
   db.all(query, params, (err, dishes) => {
@@ -128,6 +128,38 @@ router.put('/:id', upload.single('image'), (req, res) => {
       }
     );
   });
+});
+
+// PATCH /api/dishes/:id/hidden - переключить флаг isHidden
+router.patch('/:id/hidden', (req, res) => {
+  const { id } = req.params;
+  const { isHidden } = req.body;
+
+  db.run(
+    'UPDATE dishes SET isHidden = ? WHERE id = ?',
+    [isHidden ? 1 : 0, id],
+    function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      if (this.changes === 0) return res.status(404).json({ error: 'Dish not found' });
+      res.json({ id: parseInt(id), isHidden: isHidden ? 1 : 0 });
+    }
+  );
+});
+
+// PATCH /api/dishes/:id/faster - переключить флаг isBeenFaster
+router.patch('/:id/faster', (req, res) => {
+  const { id } = req.params;
+  const { isBeenFaster } = req.body;
+
+  db.run(
+    'UPDATE dishes SET isBeenFaster = ? WHERE id = ?',
+    [isBeenFaster ? 1 : 0, id],
+    function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      if (this.changes === 0) return res.status(404).json({ error: 'Dish not found' });
+      res.json({ id: parseInt(id), isBeenFaster: isBeenFaster ? 1 : 0 });
+    }
+  );
 });
 
 // DELETE /api/dishes/:id - удалить блюдо
