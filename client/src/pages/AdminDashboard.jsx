@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { MdTimer, MdTimerOff } from 'react-icons/md';
 
 function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -184,6 +186,42 @@ function AdminDashboard() {
     setShowDishForm(true);
   };
 
+  const handleToggleHidden = (dish) => {
+    const token = localStorage.getItem('adminToken');
+    const newValue = !dish.isHidden;
+
+    fetch(`/api/dishes/${dish.id}/hidden`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ isHidden: newValue })
+    })
+    .then(res => res.json())
+    .then(data => {
+      setDishes(dishes.map(d => d.id === dish.id ? { ...d, isHidden: data.isHidden } : d));
+    });
+  };
+
+  const handleToggleFaster = (dish) => {
+    const token = localStorage.getItem('adminToken');
+    const newValue = !dish.isBeenFaster;
+
+    fetch(`/api/dishes/${dish.id}/faster`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ isBeenFaster: newValue })
+    })
+    .then(res => res.json())
+    .then(data => {
+      setDishes(dishes.map(d => d.id === dish.id ? { ...d, isBeenFaster: data.isBeenFaster } : d));
+    });
+  };
+
   const resetDishForm = () => {
     setDishData({
       name: '',
@@ -327,6 +365,20 @@ function AdminDashboard() {
             <li key={dish.id} className="admin-list-item">
               <span>{dish.name} ({dish.price} ₽)</span>
               <div className="admin-actions">
+                <button
+                  onClick={() => handleToggleHidden(dish)}
+                  title={dish.isHidden ? 'Показать блюдо' : 'Скрыть блюдо'}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: dish.isHidden ? '#aaa' : '#333' }}
+                >
+                  {dish.isHidden ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                </button>
+                <button
+                  onClick={() => handleToggleFaster(dish)}
+                  title={dish.isBeenFaster ? 'Убрать приоритет' : 'Прогнать вверх'}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: dish.isBeenFaster ? '#e67e22' : '#333' }}
+                >
+                  {dish.isBeenFaster ? <MdTimer size={20} /> : <MdTimerOff size={20} />}
+                </button>
                 <button className="edit-btn" onClick={() => startEditDish(dish)}>Ред.</button>
                 <button className="delete-btn" onClick={() => handleDeleteDish(dish.id)}>Удалить</button>
               </div>
