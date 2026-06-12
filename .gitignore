@@ -1,8 +1,16 @@
+<<<<<<< HEAD
+=======
+```
+>>>>>>> 5ed74bc50c1d8cd7a0f1e6190b634f7622385a09
 # Dependencies
 node_modules/
 
 # Database
+<<<<<<< HEAD
 *.sqlite
+=======
+database.sqlite
+>>>>>>> 5ed74bc50c1d8cd7a0f1e6190b634f7622385a09
 
 # Logs and temp files
 *.log
@@ -25,3 +33,10 @@ __pycache__/
 .Python
 venv/
 .venv/
+<<<<<<< HEAD
+=======
+.env
+.env.local
+.env.*
+```
+>>>>>>> 5ed74bc50c1d8cd7a0f1e6190b634f7622385a09
