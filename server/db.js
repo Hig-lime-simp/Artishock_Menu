@@ -48,7 +48,6 @@ db.serialize(() => {
     createdAt TEXT DEFAULT CURRENT_TIMESTAMP
   );`);
 
-  // Проверка наличия категорий, если нет - создадим тестовые
   db.get('SELECT COUNT(*) as count FROM categories', (err, row) => {
     if (err) {
       console.error('Ошибка проверки категорий:', err.message);
